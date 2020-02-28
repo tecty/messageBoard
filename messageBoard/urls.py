@@ -19,9 +19,9 @@ from board import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', views.index),
-    re_path(r'^login$', views.login, name='login'),
-    re_path(r'^logout$', views.index, name='logout'),
-    re_path(r'^register$', views.index, name='register'),
+    path(r'', views.index, name='index'),
+    re_path(r'^login$', views.signin, name='signin'),
+    re_path(r'^logout$', views.signout, name='signout'),
+    re_path(r'^register$', views.signup, name='signup'),
     path('msg/', include('board.urls'))
 ]

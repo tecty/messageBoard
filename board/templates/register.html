@@ -6,43 +6,44 @@
 <!--  -->
 {%block body %}
 
-<form class="form-signin" action="{%url 'register'%}" method="POST">
-  <h1 class="h3 mb-3 font-weight-normal">登录</h1>
+<form class="form-signin" action="{%url 'signup'%}" method="POST">
+  <h1 class="h3 mb-3 font-weight-normal">注册</h1>
   <label for="username" class="sr-only">用户名</label>
+  {% csrf_token %}
   <input
     type="text"
     id="username"
     name="username"
-    class="form-control"
+    class="form-control top_sign"
     placeholder="用户名"
     required="ture"
     autofocus=""
-  />
-  <label for="name" class="sr-only">姓名</label>
-  <input
-    type="text"
-    id="name"
-    name="name"
-    class="form-control"
-    placeholder="姓名"
-    required="ture"
   />
   <label for="password" class="sr-only">密码</label>
   <input
     type="password"
     id="password"
     name="password"
-    class="form-control"
+    class="form-control mid_sign"
     placeholder="密码"
     required="ture"
   />
   <label for="passwordAgain" class="sr-only">密码确认</label>
   <input
-    type="passwordAgain"
+    type="password"
     id="passwordAgain"
     name="passwordAgain"
-    class="form-control"
-    placeholder="密码"
+    class="form-control mid_sign"
+    placeholder="密码确认"
+    required="ture"
+  />
+  <label for="name" class="sr-only">姓名</label>
+  <input
+    type="text"
+    id="name"
+    name="name"
+    class="form-control bottom_sign"
+    placeholder="姓名"
     required="ture"
   />
   <button class="btn btn-lg btn-primary btn-block" type="submit">
