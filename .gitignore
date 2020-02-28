@@ -1,4 +1,5 @@
-
+*.pyc
+.vscode/
 celerybeat-schedule.* 
 
 # SageMath parsed files 
