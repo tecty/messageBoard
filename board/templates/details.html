@@ -1,0 +1,19 @@
+{%extends 'base.html' %}{% load utils %}
+<!--  -->
+{%block extend_style %}
+<link href="/static/signin.css" rel="stylesheet" />
+{%endblock %}
+<!--  -->
+{%block body %}
+<div class="container">
+  <h1><span class="text-muted">#{{ msg.pk}}.</span>{{ msg.title}}</h1>
+  <p>{{ msg.body}}</p>
+  <p class="text-muted text-md-right ">
+    <small>
+      由：{{msg.issue_user|show_name}} 创建于： {{msg.created}}
+    </small>
+  </p>
+  <hr />
+  {%if msg.reply %} {%else %} 还没有领导的回复哦 {%endif%}
+</div>
+{%endblock %}

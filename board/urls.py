@@ -3,6 +3,7 @@ from django.urls import path, include, re_path
 from board import views
 
 urlpatterns = [
-    re_path(r'^(?P<pk>\w+)/$', views.details),
-    path('create', views.create_msg),
+    path("", views.msg_index, name="index"),
+    path('<int:pk>/', views.details, name='details'),
+    path('page/<int:page>/', views.list_view, name='list'),
 ]

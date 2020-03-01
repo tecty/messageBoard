@@ -1,4 +1,4 @@
-{%extends 'base.html' %}
+{%extends 'base.html' %} {%load utils %}
 <!--  -->
 {%block extend_style %}
 <link rel="stylesheet" href="/static/simplemde.min.css" />
@@ -11,7 +11,7 @@
 <!--  -->
 {% if user.is_authenticated %}
 <div class="container">
-  <form action="" method="post">
+  <form action="{% url 'msg:index' %}" method="post">
     {% csrf_token %}
     <div class="form-group">
       <label for="title">标题</label>
@@ -57,5 +57,26 @@
   </p>
 </div>
 {%endif %}
+<!--  -->
+<div class="container">
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">近期留言</h6>
+    {%for msg in msg_list %}
+    <div>
+      <div class="media text-muted pt-3">
+        <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+          <strong class="d-block text-gray-dark"
+            >@{{msg.issue_user| show_name}}</strong
+          >
+          <b>{{msg.title}}: </b> {{msg.body|brief |safe}}
+        </p>
+      </div>
+    </div>
+    {%endfor %}
+    <small class="d-block text-right mt-3">
+      <a href="{% url 'msg:list' 1 %}">查看全部</a>
+    </small>
+  </div>
+</div>
 <!--  -->
 {%endblock %}

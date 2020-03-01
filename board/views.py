@@ -2,11 +2,19 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import *
+from django.core.paginator import Paginator
+PER_PAGE = 10
+
+
 # Create your views here.
+def getPaged(page=1):
+    return Paginator(Message.objects.order_by('-id').all(),
+                     PER_PAGE).page(page)
 
 
 def index(request):
-    return render(request, "index.html")
+    return render(request, "index.html",
+                  {'msg_list': Message.objects.order_by('-id')[:5]})
 
 
 def signout(request):
@@ -62,11 +70,26 @@ def signup(request):
 
 def details(request, pk):
     msg = get_object_or_404(Message, pk=pk)
+    return render(request, 'details.html', {'msg': msg})
 
 
-def create_msg(request):
+def list_view(request, page):
+    getPaged(page)
+    return render(request, 'list.html', {'msg_page': getPaged(page)})
+    # try:
+    # except Exception as e:
+    #     return redirect('msg:list', page = 1)
+
+
+def msg_index(request):
     if request.method == 'GET':
         return redirect('index')
     title = request.POST['title']
     body = request.POST['body']
     user = request.user
+    if not title or not body or not user:
+        return redirect('msg:index')
+    msg = Message.objects.create(title=title, body=body, issue_user=user)
+    if not msg:
+        return redirect('index')
+    return redirect('msg:details', pk=msg.pk)

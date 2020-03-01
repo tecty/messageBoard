@@ -23,5 +23,5 @@ urlpatterns = [
     re_path(r'^login$', views.signin, name='signin'),
     re_path(r'^logout$', views.signout, name='signout'),
     re_path(r'^register$', views.signup, name='signup'),
-    path('msg/', include('board.urls'))
+    path('msg/', include(('board.urls', 'board'), namespace='msg'))
 ]

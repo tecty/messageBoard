@@ -1,0 +1,62 @@
+{%extends 'base.html' %} {%load utils %}
+<!--  -->
+{%block body %}
+<div class="container">
+  <h2>留言列表</h2>
+  {%for msg in msg_page %}
+  <div class="my-3 px-3 py-2 bg-white rounded shadow-sm">
+    <div class="media text-muted pt-3">
+      <p class="media-body  small lh-125  border-gray">
+        <strong class="d-block text-gray-dark">@{{msg.issue_user| show_name}}</strong>
+        <b>{{msg.title}}: </b> {{msg.body|brief |safe}}
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+  <nav aria-label="页面跳转">
+    <ul class="pagination  justify-content-center">
+      {%if msg_page.has_previous %}
+      <li class="page-item ">
+        <a class="page-link" href="{%url 'msg:list' msg_page.previous_page_number %}">
+          上一页
+        </a>
+      </li>
+      {%if msg_page.previous_page_number != 1 %}
+      <li class="page-item"><a class="page-link" href="{%url 'msg:list' 1%}">1</a></li>
+      </li>
+      <li class="page-item disabled"><a class="page-link">...</a></li>
+      </li>
+      {%endif%}
+      <li class="page-item"><a class="page-link"
+          href="{%url 'msg:list' msg_page.previous_page_number%}">{{msg_page.previous_page_number}}</a></li>
+      </li>
+
+      {%endif%}
+      <li class="page-item active">
+        <span class="page-link">
+          {{msg_page.number }}
+          <span class="sr-only">(当前页)</span>
+        </span>
+      </li>
+      {%if msg_page.has_next %}
+      <li class="page-item"><a class="page-link"
+          href="{%url 'msg:list' msg_page.next_page_number%}">{{msg_page.next_page_number}}</a></li>
+      </li>
+      {%if msg_page.next_page_number != 1 %}
+      </li>
+      <li class="page-item disabled"><a class="page-link">...</a></li>
+      </li>
+      <li class="page-item"><a class="page-link"
+          href="{%url 'msg:list' msg_page.paginator.num_pages%}">{{msg_page.paginator.num_pages}}</a></li>
+      {%endif%}
+
+      <li class="page-item ">
+        <a class="page-link" href="{%url 'msg:list' msg_page.next_page_number %}">
+          下一页
+        </a>
+      </li>
+      {%endif%}
+    </ul>
+  </nav>
+</div>
+{%endblock%}
